@@ -1,14 +1,8 @@
 # backpopup
 
-[![npm package][npm-img]][npm-url]
-[![Build Status][build-img]][build-url]
-[![Downloads][downloads-img]][downloads-url]
-[![Issues][issues-img]][issues-url]
-[![Code Coverage][codecov-img]][codecov-url]
-[![Commitizen Friendly][commitizen-img]][commitizen-url]
-[![Semantic Release][semantic-release-img]][semantic-release-url]
+[![npm package][npm-img]][npm-url] [![Issues][issues-img]][issues-url]
 
-> My awesome module
+A small library to display a modal when the back button is pressed.
 
 ## Install
 
@@ -18,45 +12,61 @@ npm install backpopup
 
 ## Usage
 
-```ts
-import { myPackage } from 'backpopup';
+```javascript
+import { backpopup } from 'backpopup';
 
-myPackage('hello');
-//=> 'hello from my package'
+const elements = // Any elements on the page. Typicall will be a ll `<a>` tags.
+
+const { goBack } = backpopup({
+  elements,
+  openModal: () => {
+    // Your code to display the modal.
+  },
+});
+
+const modalCloseButton = // Element to close the modal when clicked.
+
+modalCloseEl.addEventListener("click", () => {
+  $(modalEl).fadeOut();
+  // IMPORTANT: Call `goBack` to force the browser to go back to the previous page.
+  goBack();
+});
 ```
 
 ## API
 
-### myPackage(input, options?)
+### backpopup(elements, openModal, backPopupStateName, pushedStateName)
 
-#### input
+#### elements
+
+Type: `HTMLElement[]`
+
+List of HTML elements that will trigger a state to be pushed to the history.  
+This is necessary as some browsers do not allow `pushState` to be called without a user interaction.
+
+#### openModal
+
+Type: `() => void`
+
+Function that will be called when the back button is pressed.
+
+#### backPopupStateName
 
 Type: `string`
+Default: `back_popup`
 
-Lorem ipsum.
+Name of the first state that is pushed to history.  
+The `openModal` will be called When this state is popped from history.
 
-#### options
-
-Type: `object`
-
-##### postfix
+#### pushedStateName
 
 Type: `string`
-Default: `rainbows`
+Default: `already_pushed`
 
-Lorem ipsum.
+Name of the second state that is pushed to history.  
+This second state is necessary to detect when the `backPopupStateName` state is popped from history.
 
-[build-img]:https://github.com/diskshima/backpopup/actions/workflows/release.yml/badge.svg
-[build-url]:https://github.com/diskshima/backpopup/actions/workflows/release.yml
-[downloads-img]:https://img.shields.io/npm/dt/backpopup
-[downloads-url]:https://www.npmtrends.com/backpopup
-[npm-img]:https://img.shields.io/npm/v/backpopup
-[npm-url]:https://www.npmjs.com/package/backpopup
-[issues-img]:https://img.shields.io/github/issues/diskshima/backpopup
-[issues-url]:https://github.com/diskshima/backpopup/issues
-[codecov-img]:https://codecov.io/gh/diskshima/backpopup/branch/main/graph/badge.svg
-[codecov-url]:https://codecov.io/gh/diskshima/backpopup
-[semantic-release-img]:https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[semantic-release-url]:https://github.com/semantic-release/semantic-release
-[commitizen-img]:https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[commitizen-url]:http://commitizen.github.io/cz-cli/
+[npm-img]: https://img.shields.io/npm/v/backpopup
+[npm-url]: https://www.npmjs.com/package/backpopup
+[issues-img]: https://img.shields.io/github/issues/diskshima/backpopup
+[issues-url]: https://github.com/diskshima/backpopup/issues
