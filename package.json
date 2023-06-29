@@ -1,6 +1,6 @@
 {
   "name": "backpopup",
-  "version": "0.0.1-development",
+  "version": "0.0.1",
   "description": "A library to show popups when the user clicks the back button.",
   "main": "./lib/index.js",
   "files": [
